@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Calculadora de Horas</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #001f3f; /* azul marinho escuro */
+    color: #ffffff; /* branco */
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #ffffff;
+  }
+  .calc-container {
+    max-width: 480px;
+    margin: 0 auto;
+    background-color: #003366; /* azul marinho médio */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #0059b3;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  input[type="time"], input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #0059b3; /* azul mais claro para inputs */
+    color: #fff;
+  }
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+  button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    background-color: #0074d9; /* azul-brilhante */
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #005fa3;
+  }
+  .limpar {
+    background-color: #222244;
+    color: #ffffff;
+    margin-top: 15px;
+  }
+  .limpar:hover {
+    background-color: #001f3f;
+  }
+  .resultado, .conversao {
+    margin-top: 20px;
+    background-color: #00264d; /* azul marinho bem escuro */
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    min-height: 40px;
+  }
+  footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #bbbbbb;
+  }
+</style>
+</head>
+<body>
+
+<h1>Calculo de Horas</h1>
+
+<div class="calc-container">
+  <label for="horaInicio">Hora Início</label>
+  <input type="time" id="horaInicio" required />
+
+  <label for="horaFim">Hora Fim</label>
+  <input type="time" id="horaFim" required />
+
+  <button onclick="calcularDiferenca()">Calcular Diferença (Horas)</button>
+
+  <div class="resultado" id="resultado"></div>
+
+  <hr style="margin: 20px 0; border-color: #0074d9;" />
+
+  <label for="inputHoras">Converter Horas (formato HH:mm) para Minutos</label>
+  <input type="time" id="inputHoras" step="60" />
+  <button onclick="converterHorasParaMinutos()">Converter para Minutos</button>
+  <div class="conversao" id="resultadoHorasParaMinutos"></div>
+
+  <label for="inputMinutos">Converter Minutos para Horas (HH:mm)</label>
+  <input type="number" id="inputMinutos" step="1" min="0" placeholder="Ex: 105" />
+  <button onclick="converterMinutosParaHoras()">Converter para Horas</button>
+  <div class="conversao" id="resultadoMinutosParaHoras"></div>
+
+  <button class="limpar" onclick="limparTudo()">Limpar</button>
+</div>
+
+<footer> Dev-Fábio Wendler </footer>
+
+<script>
+  function calcularDiferenca() {
+    const inicio = document.getElementById('horaInicio').value;
+    const fim = document.getElementById('horaFim').value;
+
+    if (!inicio || !fim) {
+      alert('Por favor, insira ambas as horas.');
+      return;
+    }
+
+    const [h1, m1] = inicio.split(':').map(Number);
+    const [h2, m2] = fim.split(':').map(Number);
+
+    let totalInicio = h1 * 60 + m1;
+    let totalFim = h2 * 60 + m2;
+
+    if (totalFim < totalInicio) {
+      totalFim += 24 * 60;
+    }
+
+    let diffMinutos = totalFim - totalInicio;
+
+    let horas = Math.floor(diffMinutos / 60);
+    let minutos = diffMinutos % 60;
+
+    const resultadoEl = document.getElementById('resultado');
+    resultadoEl.textContent = `Diferença: ${horas}h ${minutos}min`;
+  }
+
+  function converterHorasParaMinutos() {
+    const horasStr = document.getElementById('inputHoras').value;
+
+    if (!horasStr) {
+      alert('Por favor, insira uma hora para converter.');
+      return;
+    }
+
+    const [horas, minutos] = horasStr.split(':').map(Number);
+
+    if (minutos >= 60 || minutos < 0 || horas < 0 || isNaN(horas) || isNaN(minutos)) {
+      alert('Valores inválidos.');
+      return;
+    }
+
+    const totalMinutos = horas * 60 + minutos;
+
+    document.getElementById('resultadoHorasParaMinutos').textContent =
+      `${horasStr} = ${totalMinutos} minutos.`;
+  }
+
+  function converterMinutosParaHoras() {
+    const minutosStr = document.getElementById('inputMinutos').value;
+    const minutos = parseInt(minutosStr);
+
+    if (isNaN(minutos) || minutos < 0) {
+      alert('Insira um valor válido de minutos.');
+      return;
+    }
+
+    let horas = Math.floor(minutos / 60);
+    let minutosRestantes = minutos % 60;
+
+    let formatoHH = horas.toString().padStart(2, '0');
+    let formatoMM = minutosRestantes.toString().padStart(2, '0');
+
+    document.getElementById('resultadoMinutosParaHoras').textContent =
+      `${minutos} minutos = ${formatoHH}:${formatoMM}`;
+  }
+
+  function limparTudo() {
+    document.getElementById('horaInicio').value = '';
+    document.getElementById('horaFim').value = '';
+    document.getElementById('resultado').textContent = '';
+
+    document.getElementById('inputHoras').value = '';
+    document.getElementById('resultadoHorasParaMinutos').textContent = '';
+
+    document.getElementById('inputMinutos').value = '';
+    document.getElementById('resultadoMinutosParaHoras').textContent = '';
+  }
+</script>
+
+</body>
+</html>
