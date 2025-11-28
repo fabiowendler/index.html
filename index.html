@@ -4,32 +4,63 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Calculadora de Horas</title>
+
 <style>
+  /* ======== CONFIGURAÇÃO PADRÃO (TEMA ESCURO AZUL) ======== */
   body {
     font-family: Arial, sans-serif;
-    background-color: #001f3f; /* azul marinho escuro */
-    color: #ffffff; /* branco */
+    background-color: #001f3f;
+    color: #ffffff;
     margin: 0;
     padding: 20px;
+    transition: 0.3s;
   }
+
   h1 {
     text-align: center;
     color: #ffffff;
   }
+
+  .wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .theme-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 10px 20px;
+    background: #0074d9;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .theme-btn:hover {
+    background: #005fa3;
+  }
+
   .calc-container {
     max-width: 480px;
-    margin: 0 auto;
-    background-color: #003366; /* azul marinho médio */
+    background-color: #003366;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 15px #0059b3;
+    transition: 0.3s;
   }
+
   label {
     display: block;
     margin-top: 15px;
     font-weight: bold;
-    color: #ffffff;
   }
+  
   input[type="time"], input[type="number"] {
     width: 100%;
     padding: 8px;
@@ -37,44 +68,142 @@
     border: none;
     border-radius: 4px;
     font-size: 1rem;
-    background-color: #0059b3; /* azul mais claro para inputs */
+    background-color: #0059b3;
     color: #fff;
+    transition: 0.3s;
   }
+
   input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
   }
+
   button {
     margin-top: 20px;
     width: 100%;
     padding: 12px;
     font-size: 1.1rem;
-    background-color: #0074d9; /* azul-brilhante */
+    background-color: #0074d9;
     border: none;
     border-radius: 6px;
     color: #ffffff;
     cursor: pointer;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: 0.3s;
   }
+
   button:hover {
     background-color: #005fa3;
   }
+
   .limpar {
     background-color: #222244;
-    color: #ffffff;
-    margin-top: 15px;
   }
+
   .limpar:hover {
     background-color: #001f3f;
   }
+
   .resultado, .conversao {
     margin-top: 20px;
-    background-color: #00264d; /* azul marinho bem escuro */
+    background-color: #00264d;
     padding: 12px;
     border-radius: 6px;
     font-size: 1.1rem;
     min-height: 40px;
+    transition: 0.3s;
   }
+
+  /* ====================== BLOCO DE NOTAS ====================== */
+  .notepad-container {
+    width: 260px;
+    background: #003366;
+    border-radius: 8px;
+    padding: 15px;
+    color: #ffffff;
+    box-shadow: 0 0 12px #0059b3;
+    transition: 0.3s;
+  }
+
+  .notepad-container h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #66b3ff;
+    font-weight: bold;
+  }
+
+  #notepad {
+    width: 100%;
+    height: 330px;
+    border-radius: 6px;
+    border: 1px solid #004d99;
+    padding: 10px;
+    font-size: 1rem;
+    resize: none;
+    background: #00264d;
+    color: #ffffff;
+    box-shadow: inset 0 0 6px #001a33;
+    transition: 0.3s;
+  }
+
+  /* ================= CALCULADORA NORMAL ================= */
+  .calc-normal-container {
+    margin-top: 20px;
+    width: 260px;
+    background: #003366;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px #0059b3;
+    color: white;
+    text-align: center;
+    transition: 0.3s;
+  }
+
+  .calc-normal-container h3 {
+    margin-top: 0;
+    color: #66b3ff;
+  }
+
+  .calc-display {
+    width: 100%;
+    height: 45px;
+    font-size: 1.4rem;
+    text-align: right;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: none;
+    background: #00264d;
+    color: #fff;
+    box-shadow: inset 0 0 6px #001a33;
+    transition: 0.3s;
+  }
+
+  .calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .calc-buttons button {
+    padding: 12px;
+    background: #0074d9;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .calc-buttons .op {
+    background: #004c99;
+  }
+
+  .calc-buttons .igual {
+    grid-column: span 4;
+    background: #009933;
+  }
+
   footer {
     margin-top: 30px;
     text-align: center;
@@ -82,41 +211,141 @@
     font-style: italic;
     color: #bbbbbb;
   }
+
+  /* ============================================================
+     ======================= TEMA CLARO ==========================
+     ============================================================ */
+
+  body.light {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  body.light h1,
+  body.light label,
+  body.light h3 {
+    color: #000 !important;
+  }
+
+  body.light .calc-container,
+  body.light .notepad-container,
+  body.light .calc-normal-container {
+    background-color: #f4f4f4;
+    color: #000;
+    box-shadow: 0 0 10px #bbbbbb;
+  }
+
+  body.light input,
+  body.light textarea,
+  body.light .calc-display {
+    background-color: #ffffff;
+    color: #000;
+    border: 1px solid #ccc;
+  }
+
+  body.light textarea::placeholder {
+    color: #555;
+  }
+
+  body.light .resultado,
+  body.light .conversao {
+    background-color: #e8e8e8;
+    color: #000;
+  }
+
+  body.light button {
+    background-color: #0080ff;
+  }
+
+  body.light button:hover {
+    background-color: #006fd1;
+  }
+
+  body.light .limpar {
+    background-color: #999;
+  }
+
+  body.light footer {
+    color: #333;
+  }
+
 </style>
 </head>
 <body>
 
+<button class="theme-btn" onclick="toggleTheme()">🌙 / ☀️ Tema</button>
+
 <h1>Calculo de Horas</h1>
 
-<div class="calc-container">
-  <label for="horaInicio">Hora Início</label>
-  <input type="time" id="horaInicio" required />
+<div class="wrapper">
 
-  <label for="horaFim">Hora Fim</label>
-  <input type="time" id="horaFim" required />
+  <div class="calc-container">
+    <label for="horaInicio">Hora Início</label>
+    <input type="time" id="horaInicio" required />
 
-  <button onclick="calcularDiferenca()">Calcular Diferença (Horas)</button>
+    <label for="horaFim">Hora Fim</label>
+    <input type="time" id="horaFim" required />
 
-  <div class="resultado" id="resultado"></div>
+    <button onclick="calcularDiferenca()">Calcular Diferença (Horas)</button>
+    <div class="resultado" id="resultado"></div>
 
-  <hr style="margin: 20px 0; border-color: #0074d9;" />
+    <hr style="margin: 20px 0; border-color: #0074d9;" />
 
-  <label for="inputHoras">Converter Horas (formato HH:mm) para Minutos</label>
-  <input type="time" id="inputHoras" step="60" />
-  <button onclick="converterHorasParaMinutos()">Converter para Minutos</button>
-  <div class="conversao" id="resultadoHorasParaMinutos"></div>
+    <label for="inputHoras">Converter Horas (HH:mm) para Minutos</label>
+    <input type="time" id="inputHoras" step="60" />
+    <button onclick="converterHorasParaMinutos()">Converter para Minutos</button>
+    <div class="conversao" id="resultadoHorasParaMinutos"></div>
 
-  <label for="inputMinutos">Converter Minutos para Horas (HH:mm)</label>
-  <input type="number" id="inputMinutos" step="1" min="0" placeholder="Ex: 105" />
-  <button onclick="converterMinutosParaHoras()">Converter para Horas</button>
-  <div class="conversao" id="resultadoMinutosParaHoras"></div>
+    <label for="inputMinutos">Converter Minutos para Horas (HH:mm)</label>
+    <input type="number" id="inputMinutos" step="1" min="0" />
+    <button onclick="converterMinutosParaHoras()">Converter para Horas</button>
+    <div class="conversao" id="resultadoMinutosParaHoras"></div>
 
-  <button class="limpar" onclick="limparTudo()">Limpar</button>
+    <button class="limpar" onclick="limparTudo()">Limpar</button>
+  </div>
+
+  <div>
+    <div class="notepad-container">
+      <h3>Anotações</h3>
+      <textarea id="notepad" placeholder="Digite aqui suas anotações..."></textarea>
+    </div>
+
+    <div class="calc-normal-container">
+      <h3>Calculadora</h3>
+      <input type="text" id="calcDisplay" class="calc-display" disabled>
+
+      <div class="calc-buttons">
+        <button onclick="pressCalc('7')">7</button>
+        <button onclick="pressCalc('8')">8</button>
+        <button onclick="pressCalc('9')">9</button>
+        <button class="op" onclick="pressCalc('/')">/</button>
+
+        <button onclick="pressCalc('4')">4</button>
+        <button onclick="pressCalc('5')">5</button>
+        <button onclick="pressCalc('6')">6</button>
+        <button class="op" onclick="pressCalc('*')">*</button>
+
+        <button onclick="pressCalc('1')">1</button>
+        <button onclick="pressCalc('2')">2</button>
+        <button onclick="pressCalc('3')">3</button>
+        <button class="op" onclick="pressCalc('-')">-</button>
+
+        <button onclick="pressCalc('0')">0</button>
+        <button onclick="pressCalc('.')">.</button>
+        <button onclick="calcClear()">C</button>
+        <button class="op" onclick="pressCalc('+')">+</button>
+
+        <button class="igual" onclick="calcResult()">=</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<footer> Dev-Fábio Wendler </footer>
+<footer>Dev-Fábio Wendler</footer>
 
 <script>
+  /* ====== FUNÇÕES PRINCIPAIS ====== */
   function calcularDiferenca() {
     const inicio = document.getElementById('horaInicio').value;
     const fim = document.getElementById('horaFim').value;
@@ -132,57 +361,32 @@
     let totalInicio = h1 * 60 + m1;
     let totalFim = h2 * 60 + m2;
 
-    if (totalFim < totalInicio) {
-      totalFim += 24 * 60;
-    }
+    if (totalFim < totalInicio) totalFim += 24 * 60;
 
-    let diffMinutos = totalFim - totalInicio;
+    let diff = totalFim - totalInicio;
+    let horas = Math.floor(diff / 60);
+    let minutos = diff % 60;
 
-    let horas = Math.floor(diffMinutos / 60);
-    let minutos = diffMinutos % 60;
-
-    const resultadoEl = document.getElementById('resultado');
-    resultadoEl.textContent = `Diferença: ${horas}h ${minutos}min`;
+    document.getElementById('resultado').textContent = `Diferença: ${horas}h ${minutos}min`;
   }
 
   function converterHorasParaMinutos() {
     const horasStr = document.getElementById('inputHoras').value;
+    if (!horasStr) return alert('Por favor, insira uma hora.');
 
-    if (!horasStr) {
-      alert('Por favor, insira uma hora para converter.');
-      return;
-    }
-
-    const [horas, minutos] = horasStr.split(':').map(Number);
-
-    if (minutos >= 60 || minutos < 0 || horas < 0 || isNaN(horas) || isNaN(minutos)) {
-      alert('Valores inválidos.');
-      return;
-    }
-
-    const totalMinutos = horas * 60 + minutos;
-
-    document.getElementById('resultadoHorasParaMinutos').textContent =
-      `${horasStr} = ${totalMinutos} minutos.`;
+    const [h, m] = horasStr.split(':').map(Number);
+    document.getElementById('resultadoHorasParaMinutos').textContent = `${h}h${m} = ${h * 60 + m} minutos.`;
   }
 
   function converterMinutosParaHoras() {
-    const minutosStr = document.getElementById('inputMinutos').value;
-    const minutos = parseInt(minutosStr);
+    const min = parseInt(document.getElementById('inputMinutos').value);
+    if (isNaN(min)) return alert('Digite um número válido.');
 
-    if (isNaN(minutos) || minutos < 0) {
-      alert('Insira um valor válido de minutos.');
-      return;
-    }
-
-    let horas = Math.floor(minutos / 60);
-    let minutosRestantes = minutos % 60;
-
-    let formatoHH = horas.toString().padStart(2, '0');
-    let formatoMM = minutosRestantes.toString().padStart(2, '0');
+    let h = Math.floor(min / 60);
+    let m = min % 60;
 
     document.getElementById('resultadoMinutosParaHoras').textContent =
-      `${minutos} minutos = ${formatoHH}:${formatoMM}`;
+      `${min} minutos = ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
   }
 
   function limparTudo() {
@@ -195,6 +399,34 @@
 
     document.getElementById('inputMinutos').value = '';
     document.getElementById('resultadoMinutosParaHoras').textContent = '';
+  }
+
+  /* ====== CALCULADORA ====== */
+  let calcExpression = '';
+
+  function pressCalc(value) {
+    calcExpression += value;
+    document.getElementById('calcDisplay').value = calcExpression;
+  }
+
+  function calcClear() {
+    calcExpression = '';
+    document.getElementById('calcDisplay').value = '';
+  }
+
+  function calcResult() {
+    try {
+      calcExpression = eval(calcExpression).toString();
+      document.getElementById('calcDisplay').value = calcExpression;
+    } catch {
+      document.getElementById('calcDisplay').value = 'Erro';
+      calcExpression = '';
+    }
+  }
+
+  /* ====== TEMA ====== */
+  function toggleTheme() {
+    document.body.classList.toggle("light");
   }
 </script>
 
